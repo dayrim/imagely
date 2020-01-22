@@ -1,11 +1,16 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { Grid } from "@material-ui/core";
+import { Facebook } from "@material-ui/icons";
 
 const Login = () => {
   return (
     <>
-      <Button variant="contained" color="primary">
+      <Button
+        startIcon={<Facebook />}
+        size="large"
+        variant="contained"
+        color="primary"
+      >
         LOG IN WITH FACEBOOK
       </Button>
     </>
