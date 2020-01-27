@@ -1,8 +1,6 @@
 import * as LO from "redux/login/const";
 
-const initState = { status: {}, loading: false };
-
-export default (state = initState, { payload, type }) => {
+export default (state = {}, { payload, type }) => {
   switch (type) {
     case LO.LOGIN.START:
       return { ...state, loading: payload.loading };
@@ -11,23 +9,45 @@ export default (state = initState, { payload, type }) => {
       return {
         ...state,
         status: payload.status,
+        authResponse: payload.authResponse,
         loading: payload.loading
+      };
+    case LO.STATUS_CHANGE.ERROR:
+      return {
+        ...state,
+        authResponse: null,
+        status: "unknown",
+        loading: false
+      };
+    case LO.STATUS_CHANGE.SUCCESS:
+      return {
+        ...state,
+        status: payload.status,
+        authResponse: payload.authResponse,
+        loading: payload.loading,
+        name: payload.name,
+        location: payload.location,
+        languages: payload.languages
       };
     case LO.LOGIN.ERROR:
       return {
         ...state,
-        status: undefined,
-        loading: false
+        authResponse: null,
+        status: "unknown",
+        loading: false,
+        name: undefined,
+        location: undefined,
+        languages: undefined
       };
     default:
       return state;
   }
 };
 
-const save = (key, value) => {
-  if (value) {
-    localStorage.setItem(key, value);
-  } else {
-    localStorage.removeItem(key);
-  }
-};
+// const save = (key, value) => {
+//   if (value) {
+//     localStorage.setItem(key, value);
+//   } else {
+//     localStorage.removeItem(key);
+//   }
+// };

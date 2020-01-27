@@ -1,23 +1,25 @@
 import { devToolsEnhancer } from "redux-devtools-extension/developmentOnly";
 import { createStore, applyMiddleware, compose } from "redux";
 import { createEpicMiddleware } from "redux-observable";
-
+import { createBrowserHistory } from "history";
+import { routerMiddleware } from "connected-react-router";
 import rootReducer from "./reducer";
 import rootEpic from "./epic";
 
-const epicMiddleware = createEpicMiddleware();
+export const history = createBrowserHistory();
 
-export default () => {
+export default initialState => {
+  const epicMiddleware = createEpicMiddleware();
   const enhancer = compose(
-    applyMiddleware(epicMiddleware),
+    applyMiddleware(routerMiddleware(history), epicMiddleware),
     devToolsEnhancer({
-      name: "Erply Launchpad",
+      name: "Facebook photo album",
       trace: true,
-      traeLimit: 30
+      traceLimit: 30
     })
   );
 
-  const store = createStore(rootReducer, enhancer);
+  const store = createStore(rootReducer(history), initialState, enhancer);
   if (module.hot) {
     module.hot.accept("./reducer", () => {
       const nextReducer = require("./reducer").default; // eslint-disable-line global-require

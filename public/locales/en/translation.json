@@ -1,0 +1,10 @@
+{
+  "title": "Welcome",
+  "languageSelect": {
+    "estonian": "ESTONIAN",
+    "english": "ENGLISH"
+  },
+  "logout": "LOGOUT",
+  "album": "Album",
+  "albumCollection": "Your Albums"
+}

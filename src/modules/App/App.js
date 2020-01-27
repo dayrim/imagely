@@ -1,97 +1,67 @@
-import React, { useLayoutEffect } from "react";
-import FacebookLoginWithButton from "react-facebook-login";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
 
-import "./App.scss";
-
-import { addScript } from "utils";
-import Login from "modules/Login";
+import { FBLogin } from "components";
 import Layout from "modules/Layout";
-
-const id = "facebookAuth";
-const src = "https://connect.facebook.net/en_US/sdk.js";
+import Collection from "modules/Collection";
+import Album from "modules/Album";
+import ImageModal from "modules/ImageModal";
+import { facebookAPI } from "services";
+import { history } from "redux/store";
+import { useSelector } from "react-redux";
+import { getStatus } from "redux/login";
 
 const App = () => {
-  useLayoutEffect(() => {
-    (async () => {
-      try {
-        await addScript(id, src);
-        const params = {
-          appId: "174673063904076",
-          cookie: false,
-          xfbml: false,
-          version: "v5.0"
-        };
-        // eslint-disable-next-line no-undef
-        FB.init(params);
-        // eslint-disable-next-line no-undef
-        const resp = FB.getLoginStatus();
-
-        console.log("FB:status:", resp);
-      } catch (error) {
-        console.error(error.name, ":", error.message);
-      }
-    })();
-  }, []);
+  const loginStatus = useSelector(getStatus);
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Layout>
-            <Login />
-          </Layout>
+    <ConnectedRouter history={history}>
+      <Layout>
+        <Route path="/">
+          <Route
+            path="/"
+            render={({ location: { pathname } }) => {
+              return loginStatus === "connected" ? (
+                <>
+                  {pathname === "/" && <Redirect to="/albums" />}
+
+                  <Route path="/albums/:albumID">
+                    <Album />
+                  </Route>
+                  <Route exact path={`/albums/:albumID/:imageID`}>
+                    <ImageModal></ImageModal>
+                  </Route>
+                  <Route exact path="/albums">
+                    <Collection />
+                  </Route>
+                </>
+              ) : (
+                <Redirect to="/login" />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/login"
+            render={() =>
+              loginStatus === "connected" ? (
+                <Redirect to="/" />
+              ) : (
+                <FBLogin
+                  onClick={() =>
+                    facebookAPI.login({
+                      scope: "user_photos",
+                      auth_type: "rerequest"
+                    })
+                  }
+                />
+              )
+            }
+          />
         </Route>
-      </Switch>
-    </Router>
+      </Layout>
+    </ConnectedRouter>
   );
 };
 
 export default App;
-
-// const componentClicked = () => {
-//   console.log("Clicked!");
-// };
-
-// const LoginButton = ({ facebookResponse }) => (
-//   <FacebookLoginWithButton
-//     appId="174673063904076"
-//     // autoLoad
-//     fields="name,email,picture"
-//     onClick={componentClicked}
-//     callback={facebookResponse}
-//     icon="fa-facebook"
-//   />
-// );
-
-// const UserScreen = ({ user }) => (
-//   <>
-//     <h1>Welcome {user.name}!</h1>
-//     <p>{user.email}</p>
-//     <img
-//       src={user.picture.data.url}
-//       height={user.picture.height}
-//       width={user.picture.width}
-//       alt="avatar"
-//     />
-//   </>
-// );
-
-// class App2 extends React.Component {
-//   state = { user: false };
-//   facebookResponse = response => {
-//     console.log(response);
-//     this.setState({ ...this.state, user: response });
-//   };
-
-//   render() {
-//     return (
-//       <div style={{ margin: "auto", textAlign: "center", paddingTop: "2em" }}>
-//         {this.state.user ? (
-//           <UserScreen user={this.state.user} />
-//         ) : (
-//           <LoginButton facebookResponse={this.facebookResponse} />
-//         )}
-//       </div>
-//     );
-//   }
-// }

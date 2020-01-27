@@ -1,6 +1,6 @@
 import * as LO from "redux/login/const";
 
-export const facebookLogin = payload => ({
+export const facebookLogin = () => ({
   type: LO.LOGIN.START,
-  payload: { ...payload, loading: true }
+  payload: { loading: true }
 });

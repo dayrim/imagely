@@ -1,0 +1,10 @@
+{
+  "title": "Tere tulemast",
+  "languageSelect": {
+    "estonian": "EESTI",
+    "english": "INGLISE"
+  },
+  "logout": "Logi välja",
+  "album": "Album",
+  "albumsCollection": "Teie Albumid"
+}
