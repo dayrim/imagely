@@ -9,8 +9,7 @@ export const getPrevImage = imageID => state => {
   const currentImageIndex = state.photos.images.findIndex(
     ({ id }) => imageID === id
   );
-  if (currentImageIndex === 0)
-    return state.photos.images[state.photos.images.length - 1];
+  if (currentImageIndex === 0) return undefined;
   return state.photos.images[currentImageIndex - 1];
 };
 export const getNextImage = imageID => state => {
@@ -18,7 +17,6 @@ export const getNextImage = imageID => state => {
   const currentImageIndex = state.photos.images.findIndex(
     ({ id }) => imageID === id
   );
-  if (currentImageIndex === state.photos.images.length - 1)
-    return state.photos.images[0];
+  if (currentImageIndex === state.photos.images.length - 1) return undefined;
   return state.photos.images[currentImageIndex + 1];
 };

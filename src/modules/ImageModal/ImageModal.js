@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { Dialog, Fab, DialogContent } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import { Dialog, Fab, DialogContent, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { push } from "connected-react-router";
 
@@ -36,6 +37,13 @@ const useStyles = makeStyles(theme => ({
     right: "35px",
     top: "50%",
     transform: "scale(1.5) translateY(-50%)"
+  },
+  close: {
+    position: "absolute",
+    top: "5px",
+    transform: "scale(1.2) ",
+    right: "5px",
+    color: "#000000"
   }
 }));
 
@@ -49,7 +57,7 @@ const ImageModal = () => {
 
   return (
     <div>
-      {image && prevImage && nextImage ? (
+      {image ? (
         <Dialog
           open={true}
           maxWidth="xl"
@@ -58,6 +66,13 @@ const ImageModal = () => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
+          <IconButton
+            onClick={() => dispatch(push(`/albums/${albumID}/`))}
+            color="primary"
+            className={classes.close}
+          >
+            <CloseIcon />
+          </IconButton>
           <DialogContent className={classes.content}>
             <img
               className={classes.image}
@@ -66,16 +81,22 @@ const ImageModal = () => {
             ></img>
           </DialogContent>
           <Fab
-            onClick={() => dispatch(push(`/albums/${albumID}/${prevImage.id}`))}
+            onClick={() =>
+              dispatch(push(`/albums/${albumID}/${prevImage && prevImage.id}`))
+            }
             color="primary"
+            disabled={!prevImage}
             size={"small"}
             className={classes.navigateLeft}
           >
             <ArrowBackIosIcon />
           </Fab>
           <Fab
-            onClick={() => dispatch(push(`/albums/${albumID}/${nextImage.id}`))}
+            onClick={() =>
+              dispatch(push(`/albums/${albumID}/${nextImage && nextImage.id}`))
+            }
             color="primary"
+            disabled={!nextImage}
             size={"small"}
             className={classes.navigateRight}
           >
