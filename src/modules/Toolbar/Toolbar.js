@@ -52,7 +52,7 @@ export default function ButtonAppBar() {
   const userName = useSelector(getUserName);
   const loginStatus = useSelector(getStatus);
   const { t, i18n } = useTranslation("translation");
-  const [language, setLanguage] = useState(i18n.language);
+  const [language, setLanguage] = useState(i18n.language || "en");
   return (
     <div className={classes.root}>
       <AppBar position="sticky">
