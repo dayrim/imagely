@@ -8,4 +8,9 @@ app.use(express.static(__dirname + "/build/"));
 app.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname + "/build/index.html"));
 });
-app.listen(process.env.PORT || 3000);
+const PORT = process.env.PORT || 9090;
+
+app.listen(PORT, () => {
+  console.log(`NodeJS App listening on port ${PORT}`);
+  console.log("Press Ctrl+C to quit.");
+});
