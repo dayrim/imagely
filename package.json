@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^7.1.2",
     "connected-react-router": "^6.6.1",
     "cross-env": "^6.0.3",
+    "express": "^4.17.1",
     "i18next": "^19.0.3",
     "i18next-xhr-backend": "^3.2.2",
     "node-sass": "^4.13.1",
@@ -26,8 +27,10 @@
     "redux-observable": "^1.2.0"
   },
   "scripts": {
-    "start": "cross-env HTTPS=true react-scripts start",
-    "build": "react-scripts build"
+    "start": "node server.js",
+    "dev": "cross-env HTTPS=true react-scripts start",
+    "build": "react-scripts build",
+    "postinstall": "yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"
