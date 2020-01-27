@@ -62,7 +62,6 @@ const Album = () => {
           <Divider
             variant="fullWidth"
             orientation="horizontal"
-            light="true"
             className={classes.divider}
           ></Divider>
           <GridList cellHeight={245} spacing={10} cols={3}>
