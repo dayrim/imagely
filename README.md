@@ -9,6 +9,8 @@ The app is deployed to `https://fb-albums.herokuapp.com`.
 - Run `yarn install` to download all flagged dependencies and build the project. All build files will be stored in the `dist/` directory.
 - Run `yarn start` to start development server.
 - Navigate to `http://localhost:3000/`.
+- If you see `https` error, put in chrome://flags/#allow-insecure-localhost in the address bar.
+- Enable the option "Allow invalid certificates for resources loaded from localhost"
 
 ## Available Scripts
 
