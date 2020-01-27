@@ -6,8 +6,8 @@ The app is deployed to `https://fb-albums.herokuapp.com`.
 - Intall yarn https://legacy.yarnpkg.com/en/docs/install#windows-stable
 - Download project or run `git clone https://github.com/dayrim/imagely.git` to clone project.
 - Go to project root.
-- Run `yarn install` to download all flagged dependencies and build the project. All build files will be stored in the `dist/` directory.
-- Run `yarn start` to start development server.
+- Run `yarn install` to download all dependencies.
+- Run `yarn start` to build the project and start development server.
 - Navigate to `http://localhost:3000/`.
 - If you see `https` error, put in chrome://flags/#allow-insecure-localhost in the address bar.
 - Enable the option "Allow invalid certificates for resources loaded from localhost"
